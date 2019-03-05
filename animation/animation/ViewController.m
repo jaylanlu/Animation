@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface ViewController ()
 
@@ -18,7 +19,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor lightGrayColor];
-    UIView *layerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
+    UIView *layerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     layerView.center = self.view.center;
     layerView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:layerView];
@@ -33,8 +34,24 @@
     redLayer.contents = (__bridge id _Nullable)([UIImage imageNamed:@"ico_konhgjian_"].CGImage);
     
     //contentsGravity类似UIView中的contentMode
-    redLayer.contentsGravity = kCAGravityResizeAspectFill;
+    redLayer.contentsGravity = kCAGravityCenter;
+    //contensScale定义了寄宿图的像素尺寸和视图大小的比例，默认为1.0
+    redLayer.contentsScale = [UIImage imageNamed:@"ico_konhgjian_"].scale;
+    //相当于UIView的clipsToBounds属性
+    redLayer.masksToBounds = YES;
+    
+    //contensRect显示寄宿图的一个子域
+    redLayer.contentsRect = CGRectMake(0.5, 0.5, 1, 1);
     [layerView.layer addSublayer:redLayer];
+    
+    CALayer *blueLayer = [CALayer new];
+    blueLayer.frame = CGRectMake(50, 50, 50, 50);
+    blueLayer.contents = (__bridge id _Nullable)([UIImage imageNamed:@"ico_konhgjian_"].CGImage);
+    blueLayer.contentsGravity = kCAGravityCenter;
+    blueLayer.contentsScale = [UIImage imageNamed:@"ico_konhgjian_"].scale;
+    blueLayer.masksToBounds = YES;
+    redLayer.contentsRect = CGRectMake(0, 0, 0.5, 0.5);
+    [layerView.layer addSublayer:blueLayer];
 }
 
 
